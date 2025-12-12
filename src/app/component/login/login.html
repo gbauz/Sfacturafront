@@ -1,0 +1,52 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-title>Iniciar sesión</mat-card-title>
+    <mat-card-subtitle>Accede a tu cuenta</mat-card-subtitle>
+
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+
+      <!-- Email -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" formControlName="email">
+        <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+          El correo es obligatorio
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+          Correo inválido
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput
+               [type]="hidePassword ? 'password' : 'text'"
+               formControlName="password">
+
+        <button mat-icon-button
+                matSuffix
+                type="button"
+                (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+
+        <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+          La contraseña es obligatoria
+        </mat-error>
+        <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+          Mínimo 6 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Button -->
+      <button mat-raised-button
+              color="primary"
+              class="full-width"
+              [disabled]="loading">
+        {{ loading ? 'Ingresando...' : 'Ingresar' }}
+      </button>
+
+    </form>
+  </mat-card>
+</div>
